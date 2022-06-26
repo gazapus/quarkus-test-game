@@ -75,7 +75,7 @@
 	  var connect = function() {
 		if (! connected) {
 		  var name = $("#name").val();
-		  socket = new WebSocket("ws://" + location.host + "/chat/" + name);
+		  socket = new WebSocket("wss://" + location.host + "/chat/" + name);
 		  socket.onopen = function() {
 			connected = true;
 			$("#send").attr("disabled", false);
