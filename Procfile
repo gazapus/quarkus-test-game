@@ -1,1 +1,1 @@
-web: java \$JAVA_OPTS -jar target/code-with-quarkus-dev.jar
+web: java -jar target/code-with-quarkus-dev.jar
