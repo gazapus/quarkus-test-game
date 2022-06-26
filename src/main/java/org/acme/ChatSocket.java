@@ -26,19 +26,19 @@ public class ChatSocket {
 	@OnClose
 	public void onClose(Session session, @PathParam("username") String username) {
 		sessions.remove(username);
-		broadcast("User " + username + " left");
+		broadcast("Usuario " + username + " se fue");
 	}
 
 	@OnError
 	public void onError(Session session, @PathParam("username") String username, Throwable throwable) {
 		sessions.remove(username);
-		broadcast("User " + username + " left on error: " + throwable);
+		broadcast("Usuario " + username + " tuvo un error: " + throwable);
 	}
 
 	@OnMessage
 	public void onMessage(String message, @PathParam("username") String username) {
 		if (message.equalsIgnoreCase("_ready_")) {
-			broadcast("User " + username + " joined");
+			broadcast("Usuario " + username + " se unió");
 		} else {
 			broadcast(">> " + username + ": " + message);
 		}

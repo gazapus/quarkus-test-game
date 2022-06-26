@@ -1,0 +1,131 @@
+:root {
+    --text-color: #fefae0;
+    --dark-color: #6d6875;
+    --font-main: 'Rubik Moonrocks', cursive;
+    --border-color: #b5838d;
+    --buton-color: #ffcdb2;
+    --font: 'Trebuchet MS';
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #fff5f5;
+    background-image: url("https://www.transparenttextures.com/patterns/climpek.png");
+}
+
+main {
+    padding: 0 10vw 0 10vw;
+}
+
+header {
+    background-color: var(--dark-color);
+    color: var(--text-color);
+    padding: 0.5em 1.5em;
+    font-size: 1.8em;
+    text-align: center;
+    font-family: var(--font-main);
+}
+
+.name,
+.mensaje {
+    margin: 2em 0;
+    display: flex;
+    justify-content: center;
+}
+
+.name span,
+.mensaje span
+{
+    display: flex;
+    border-style: solid;
+    border-width: 3px;
+    border-radius: 15px;
+    border-color: var(--border-color);
+    min-width: 350px;
+}
+
+.name span input {
+    text-transform: capitalize;
+}
+
+.name span input,
+.mensaje span input
+{
+    height: 2.5em;
+    border-radius: 15px 0 0 15px;
+    border-style: none;
+    padding-left: 1em;
+    padding-right: 1em;
+    flex-grow: 1;
+}
+
+.name span button,
+.mensaje span button {
+    height: 2.5em;
+    border-radius: 0 14px 14px 0;
+    border-style: none none none solid;
+    border-color: var(--border-color);
+    border-width: 3px;
+    background-color: var(--buton-color);
+    font-family: var(--font);
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+    font-weight: bold;
+}
+
+.name span button:hover,
+.mensaje span button:hover {
+    filter: brightness(1.1);
+}
+
+*:focus {
+    outline: none;
+}
+
+.text {
+    margin: 2em 0;
+    display: flex;
+    justify-content: center;
+}
+
+textarea:disabled {
+    background-color: white;
+}
+
+#chat {
+    border-style: solid;
+    border-width: 3px;
+    border-radius: 10px;
+    border-color: var(--border-color);
+    min-height: 40vh;
+    min-width: 350px;
+}
+
+.mensaje span button {
+    background-color: #a2d2ff;
+}
+
+input:disabled,
+button:disabled {
+     background-color: lightgray;
+}
+
+.bunny {
+    display: flex;
+    justify-content: center;
+    font-size: 2em;
+}
+
+.bunny button {
+    background-color: #ffcdb2;
+    border-style: solid;
+    border-width: 3px;
+    border-color: var(--border-color);
+    border-radius: 50%;
+    padding: 6px;
+}
+
+.bunny button:hover {
+    filter: brightness(1.1);
+}

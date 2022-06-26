@@ -4,111 +4,120 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Quarkus Chat!</title>
-	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/patternfly/3.24.0/css/patternfly.min.css">
-	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/patternfly/3.24.0/css/patternfly-additions.min.css">
-
-	<style>
-        #chat {
-            resize: none;
-            overflow: hidden;
-            min-height: 300px;
-            max-height: 300px;
-        }
-	</style>
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+	<link rel="stylesheet" href="indes.css">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Rubik+Moonrocks&display=swap" rel="stylesheet">
 </head>
 
 <body>
-<nav class="navbar navbar-default navbar-pf" role="navigation">
-	<div class="navbar-header">
-		<a class="navbar-brand" href="/">
-			<p><strong>>> Quarkus Chat!</strong></p>
-		</a>
-	</div>
-</nav>
-<div class="container">
-	<br/>
-	<div class="row">
-		<input id="name" class="col-md-4" type="text" placeholder="your name">
-		<button id="connect" class="col-md-1 btn btn-primary" type="button">connect</button>
-		<br/>
-		<br/>
-	</div>
-	<div class="row">
-		<textarea class="col-md-8" id="chat"></textarea>
-	</div>
-	<div class="row">
-		<input class="col-md-6" id="msg" type="text" placeholder="enter your message">
-		<button class="col-md-1 btn btn-primary" id="send" type="button" disabled>send</button>
-	</div>
+	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js" integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-kjU+l4N0Yf4ZOJErLsIcvOU2qSb74wXpOhqTvwVx3OElZRweTnQ6d31fXEoRD1Jy" crossorigin="anonymous"></script>
 
-</div>
+	<header>
+		Prueba Gazaposa
+	</header>
+	<main>
+		<div class="name">
+			<span>
+				<input type="text" placeholder="Nick..." id="name" autocapitalize="on" />
+				<button type="button" id="connect">CONECTAR</button>
+			</span>
+		</div>
+		<div class="text">
+			<textarea id="chat"></textarea>
+		</div>
+		<div class="mensaje">
+			<span>
+				<input type="text" placeholder="mensaje" id="msg"  disabled="true"/>
+				<button type="button" id="send" disabled="true">ENVIAR</button>
+			</span>
+		</div>
+		<div class="bunny">
+			<button id="bunbutton">🐇</button>
+			<button id="heartbutton">❤</button>
+		</div>
+	</main>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/patternfly/3.24.0/js/patternfly.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
-<script type="text/javascript">
-  var connected = false;
-  var socket;
+	<script type="text/javascript">
+	  var connected = false;
+	  var socket;
 
-  $( document ).ready(function() {
-    $("#connect").click(connect);
-    $("#send").click(sendMessage);
+	  $( document ).ready(function() {
+		$("#connect").click(connect);
+		$("#send").click(sendMessage);
+		$("#bunbutton").click(sendBunny);
+		$("#heartbutton").click(sendHeart);
 
-    $("#name").keypress(function(event){
-      if(event.keyCode == 13 || event.which == 13) {
-        connect();
-      }
-    });
+		$("#name").keypress(function(event){
+		  if(event.keyCode == 13 || event.which == 13) {
+			connect();
+		  }
+		});
 
-    $("#msg").keypress(function(event) {
-      if(event.keyCode == 13 || event.which == 13) {
-        sendMessage();
-      }
-    });
+		$("#msg").keypress(function(event) {
+		  if(event.keyCode == 13 || event.which == 13) {
+			sendMessage();
+		  }
+		});
 
-    $("#chat").change(function() {
-      scrollToBottom();
-    });
+		$("#chat").change(function() {
+		  scrollToBottom();
+		});
 
-    $("#name").focus();
-  });
+		$("#name").focus();
+	  });
 
-  var connect = function() {
-    if (! connected) {
-      var name = $("#name").val();
-      console.log("Val: " + name);
-      socket = new WebSocket("wss://" + location.host + "/chat/" + name);
-      socket.onopen = function() {
-        connected = true;
-        console.log("Connected to the web socket");
-        $("#send").attr("disabled", false);
-        $("#connect").attr("disabled", true);
-        $("#name").attr("disabled", true);
-        $("#msg").focus();
+	  var connect = function() {
+		if (! connected) {
+		  var name = $("#name").val();
+		  socket = new WebSocket("ws://" + location.host + "/chat/" + name);
+		  socket.onopen = function() {
+			connected = true;
+			$("#send").attr("disabled", false);
+			$("#connect").attr("disabled", true);
+			$("#name").attr("disabled", true);
+			$("#msg").attr("disabled", false);
+			$("#msg").focus();
+            $("#connect").html("CONECTADO");
+          };
+		  socket.onmessage =function(m) {
+			$("#chat").append(m.data + "\n");
+			scrollToBottom();
+		  };
+		}
+	  };
+
+	  var sendMessage = function(message) {
+		if (connected) {
+		  console.log($("#msg").val())
+		  var value = typeof message === "string" ?  message : $("#msg").val();
+		  if(value) {
+            socket.send(value);
+            $("#msg").val("");
+		  }
+		}
+	  };
+
+      var sendBunny = function() {
+        sendMessage("🐇");
       };
-      socket.onmessage =function(m) {
-        console.log("Got message: " + m.data);
-        $("#chat").append(m.data + "\n");
-        scrollToBottom();
-      };
-    }
-  };
 
-  var sendMessage = function() {
-    if (connected) {
-      var value = $("#msg").val();
-      console.log("Sending " + value);
-      socket.send(value);
-      $("#msg").val("");
-    }
-  };
+      var sendHeart = function () {
+        const corazones = ["❤", "🧡", "💛", "💚", "💙", "🤎", "🖤", "🤍", "💘", "💗"]
+		const randomNumber = Math.round(Math.random() * 10);
+        sendMessage(corazones[randomNumber]);
+      }
 
-  var scrollToBottom = function () {
-    $('#chat').scrollTop($('#chat')[0].scrollHeight);
-  };
+	  var scrollToBottom = function () {
+		$('#chat').scrollTop($('#chat')[0].scrollHeight);
+	  };
 
-</script>
+	</script>
 </body>
 
 </html>
